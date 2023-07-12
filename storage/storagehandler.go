@@ -4,11 +4,13 @@ import (
 	"context"
 	"io"
 	"time"
+
+	commonv1 "github.com/nodeum-io/nodeum-proto/nodeum/common/v1"
 )
 
 type HandlerOptions map[string]interface{}
 
-type ReaddirFunc func(info NodeInfo)
+type ReaddirFunc func(info *commonv1.NodeInfo)
 
 type Handler interface {
 	// Prepare is called when the Handler is needed for the first time
@@ -17,7 +19,7 @@ type Handler interface {
 	Dispose(ctx context.Context) error
 
 	// Storage returns the storage sets with `NewStorageHandler`
-	Storage() Storage
+	Storage() *commonv1.Storage
 	// Options returns the storage sets with `NewStorageHandler`
 	Options() HandlerOptions
 
@@ -27,9 +29,9 @@ type Handler interface {
 	Readdir(ctx context.Context, path string, readdirFn ReaddirFunc) error
 
 	// NodeInfo returns information for the node located at `path`
-	NodeInfo(ctx context.Context, path string) (NodeInfo, error)
+	NodeInfo(ctx context.Context, path string) (*commonv1.NodeInfo, error)
 	// SetNodeInfo sets info like FileMode, UID, GID and times. Returns info effectively set.
-	SetNodeInfo(ctx context.Context, path string, info NodeInfo) (NodeInfo, error)
+	SetNodeInfo(ctx context.Context, path string, info *commonv1.NodeInfo) (*commonv1.NodeInfo, error)
 
 	Reader(ctx context.Context, path string) (io.Reader, error)
 	Writer(ctx context.Context, path string, opts ...WriterOption) (io.Writer, error)
@@ -48,9 +50,9 @@ type Expirable interface {
 type DirCreator interface {
 	// Mkdir creates a directory at `path`. Also create parents if missing.
 	// Returns infos about all folders created, with the last item being `path`.
-	Mkdir(ctx context.Context, path string) ([]NodeInfo, error)
+	Mkdir(ctx context.Context, path string) ([]*commonv1.NodeInfo, error)
 }
 
 type HandlerProvider interface {
-	NewStorageHandler(Storage, HandlerOptions) Handler
+	NewStorageHandler(*commonv1.Storage, HandlerOptions) Handler
 }
