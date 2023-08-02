@@ -5,13 +5,14 @@ type ErrorType string
 
 // Enumeration of type of errors
 var (
-	ErrUnknown    ErrorType = "unknown"
-	ErrNotExist   ErrorType = "not-exist"
-	ErrNotDir     ErrorType = "not-dir"
-	ErrPermission ErrorType = "permission"
-	ErrExist      ErrorType = "exist"
-	ErrNotEmpty   ErrorType = "not-empty"
-	ErrTimeout    ErrorType = "timeout"
+	ErrUnknown        ErrorType = "unknown"
+	ErrNotExist       ErrorType = "not-exist"
+	ErrNotDir         ErrorType = "not-dir"
+	ErrPermission     ErrorType = "permission"
+	ErrExist          ErrorType = "exist"
+	ErrNotEmpty       ErrorType = "not-empty"
+	ErrTimeout        ErrorType = "timeout"
+	ErrUnknownCommand ErrorType = "unknown-command"
 )
 
 type Error interface {

@@ -51,6 +51,23 @@ type DirCreator interface {
 	Mkdir(ctx context.Context, path string) ([]NodeInfo, error)
 }
 
+type CustomRequest struct {
+	Type    string
+	Path    string
+	Options map[string]interface{}
+}
+type CustomResult struct {
+	Type       string
+	Parameters map[string]interface{}
+}
+type CustomCommanderStream interface {
+	Send(*CustomResult) error
+}
+
+type CustomCommander interface {
+	Command(ctx context.Context, req *CustomRequest, res CustomCommanderStream) error
+}
+
 type HandlerProvider interface {
 	NewStorageHandler(Storage, HandlerOptions) Handler
 }
