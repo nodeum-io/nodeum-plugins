@@ -13,6 +13,7 @@ var (
 	ErrNotEmpty       ErrorType = "not-empty"
 	ErrTimeout        ErrorType = "timeout"
 	ErrUnknownCommand ErrorType = "unknown-command"
+	ErrBadChecksum    ErrorType = "bad-checksum"
 )
 
 type Error interface {
