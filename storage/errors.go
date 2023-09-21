@@ -19,3 +19,19 @@ type Error interface {
 	error
 	Type() ErrorType
 }
+
+type OpError struct {
+	error
+	_type ErrorType
+}
+
+func (e OpError) Type() ErrorType {
+	return e._type
+}
+
+func NewOpError(err error, t ErrorType) Error {
+	if err == nil {
+		return nil
+	}
+	return OpError{err, t}
+}
